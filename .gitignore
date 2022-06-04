@@ -117,8 +117,5 @@ dist
 .pnp.*
 .build
 
-# environment variable
-.env
-
 # DS_Store
 .DS_Store
