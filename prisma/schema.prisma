@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model hotel {
+  id           BigInt   @id(map: "hotel_pk")
+  name         String?  @db.VarChar
+  location     String?  @db.VarChar
+  price        String?  @db.VarChar
+  rating       String?  @db.VarChar
+  total_review Int?
+  image_url    String?  @db.VarChar
+  type         String?  @db.VarChar
+  review       review[] @ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model review {
+  hotel_id        BigInt?
+  name            String? @db.VarChar
+  rating          Float?  @db.Real
+  travel_purposes String? @db.VarChar
+  content         String? @db.VarChar
+  hotel           hotel?  @relation(fields: [hotel_id], references: [id], onDelete: Cascade, map: "review_hotel_id_fk")
+
+  @@ignore
+}
+
+model user {
+  id         Int       @id(map: "user_pk") @default(autoincrement())
+  email      String?   @db.VarChar
+  password   String?   @db.VarChar
+  gender     String?   @db.VarChar
+  birth_date DateTime? @db.Date
+  created_at DateTime? @db.Time(6)
+  deleted_at DateTime? @db.Time(6)
+}
