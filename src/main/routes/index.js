@@ -2,6 +2,8 @@ import express from "express"
 import loginController from "../controllers/loginController.js"
 import registerController from "../controllers/registerController.js"
 import rateLimit from "express-rate-limit"
+import hotelController from "../controllers/hotelController.js"
+import tokenAuth from "../functions/tokenAuth.js"
 
 const router = express.Router()
 
@@ -19,4 +21,6 @@ router.get("/", function (req, res, next) {
 router.post("/login", loginLimiter, (req, res) => loginController.login(req, res))
 router.post('/register', (req, res) => registerController.register(req, res))
 
+router.post('/get-hotel', (req,res) => hotelController.getHotel(req,res))
+router.post('/get-ranking', tokenAuth.verify, (req,res) => hotelController.hotelRanking(req, res))
 export default router
