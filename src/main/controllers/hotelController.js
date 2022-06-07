@@ -41,7 +41,7 @@ const getHotel = async (req, res) => {
     const objBuilder = {
       id: parseInt(hotel.id),
       name: hotel.name,
-      location: hotel.name,
+      location: hotel.location,
       price: hotel.price,
       total_rating: parseFloat(hotel.rating),
       total_review: hotel.total_review,
